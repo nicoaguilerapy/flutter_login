@@ -8,21 +8,26 @@ class HomeScren extends StatelessWidget {
     final authServices = Provider.of<AuthService>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Inicio'),
-        backgroundColor: Colors.indigoAccent,
-        actions: [
-          IconButton(
-            onPressed: () {
-              authServices.logout();
-              Navigator.pushReplacementNamed(context, 'login');
-            },
-            icon: Icon(
-              Icons.login_outlined,
-            ),
-          )
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Inicio'),
+          backgroundColor: Colors.indigoAccent,
+          actions: [
+            IconButton(
+              onPressed: () {
+                authServices.logout();
+                Navigator.pushReplacementNamed(context, 'login');
+              },
+              icon: Icon(
+                Icons.login_outlined,
+              ),
+            )
+          ],
+        ),
+        body: ListView.builder(
+            itemBuilder: (BuildContext, int index) => Text('Item: $index')),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {},
+        ));
   }
 }
