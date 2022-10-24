@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/services/auth_services.dart';
+import 'package:flutter_login/services/services.dart';
+import 'package:flutter_login/screens/screens.dart';
 import 'package:flutter_login/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +9,8 @@ class HomeScren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthService>(context, listen: false);
+    final productService = Provider.of<ProductServices>(context, listen: false);
+    if (productService.isLoading) return LoadingScreen();
 
     return Scaffold(
         appBar: AppBar(
