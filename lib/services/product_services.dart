@@ -6,6 +6,7 @@ import 'dart:convert';
 class ProductServices extends ChangeNotifier {
   final String _baseUrl = 'flutterlogin-e6e99-default-rtdb.firebaseio.com';
   final List<Product> products = [];
+  late Product selectedProduct;
 
   bool isLoading = true;
   ProductServices() {
@@ -19,9 +20,6 @@ class ProductServices extends ChangeNotifier {
     final res = await http.get(url);
     final Map<String, dynamic> productsMap = json.decode(res.body);
     productsMap.forEach((key, value) {
-      print(key);
-      print(value);
-
       final tempProd = Product.fromMap(value);
       tempProd.id = key;
       this.products.add(tempProd);
