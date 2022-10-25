@@ -9,7 +9,7 @@ class HomeScren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthService>(context, listen: false);
-    final productService = Provider.of<ProductServices>(context, listen: false);
+    final productService = Provider.of<ProductServices>(context);
     if (productService.isLoading) return LoadingScreen();
 
     return Scaffold(
@@ -29,9 +29,12 @@ class HomeScren extends StatelessWidget {
           ],
         ),
         body: ListView.builder(
+            itemCount: productService.products.length,
             itemBuilder: (BuildContext, int index) => GestureDetector(
                   onTap: () => Navigator.pushNamed(context, 'product'),
-                  child: ProductCard(),
+                  child: ProductCard(
+                    product: productService.products[index],
+                  ),
                 )),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),

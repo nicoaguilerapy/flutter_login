@@ -1,8 +1,8 @@
+// To parse this JSON data, do
+//
+//     final product = productFromMap(jsonString);
+
 import 'dart:convert';
-
-Product productFromJson(String str) => Product.fromJson(json.decode(str));
-
-String productToJson(Product data) => json.encode(data.toJson());
 
 class Product {
   Product({
@@ -15,24 +15,21 @@ class Product {
   bool available;
   String name;
   String? picture;
-  double price;
-  String? key;
+  String price;
+  String? id;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        available: json["available"],
-        name: json["name"],
-        picture: json["picture"],
-        price: json["price"].toDouble(),
-      );
+  factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
         available: json["available"],
         name: json["name"],
         picture: json["picture"],
-        price: json["price"].toDouble(),
+        price: json["price"].toString(),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "available": available,
         "name": name,
         "picture": picture,

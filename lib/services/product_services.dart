@@ -4,8 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ProductServices extends ChangeNotifier {
-  final String _baseUrl =
-      'https://flutterlogin-e6e99-default-rtdb.firebaseio.com';
+  final String _baseUrl = 'flutterlogin-e6e99-default-rtdb.firebaseio.com';
   final List<Product> products = [];
 
   bool isLoading = true;
@@ -16,14 +15,19 @@ class ProductServices extends ChangeNotifier {
   Future<List<Product>> loadProducts() async {
     this.isLoading = true;
     notifyListeners();
-    final url = Uri.https(_baseUrl, 'products.json');
+    final url = Uri.https(_baseUrl, '/productos.json');
     final res = await http.get(url);
     final Map<String, dynamic> productsMap = json.decode(res.body);
     productsMap.forEach((key, value) {
+      print(key);
+      print(value);
+
       final tempProd = Product.fromMap(value);
+      tempProd.id = key;
       this.products.add(tempProd);
     });
     this.isLoading = false;
+    notifyListeners();
     return this.products;
   }
 }
