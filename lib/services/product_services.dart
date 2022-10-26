@@ -7,7 +7,7 @@ class ProductServices extends ChangeNotifier {
   final String _baseUrl = 'flutterlogin-e6e99-default-rtdb.firebaseio.com';
   final List<Product> products = [];
   late Product selectedProduct;
-
+  bool isSaving = false;
   bool isLoading = true;
   ProductServices() {
     loadProducts();
@@ -27,5 +27,23 @@ class ProductServices extends ChangeNotifier {
     this.isLoading = false;
     notifyListeners();
     return this.products;
+  }
+
+  Future saveOrCreateProduct(Product product) async {
+    this.isSaving = true;
+    notifyListeners();
+    if (product.id == null) {
+    } else {
+      await this.updateProduct(product);
+    }
+    this.isSaving = false;
+    notifyListeners();
+  }
+
+  Future<String> updateProduct(Product product) async {
+    final url = Uri.https(_baseUrl, '/productos/${product.id}.json');
+    final res = await http.put(url, body: product.toJson());
+    final decodeResponse = res.body;
+    return product.id!;
   }
 }
